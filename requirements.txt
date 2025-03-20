@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+tensorflow
+opencv-python
+numpy
+pandas
+pillow
+scikit-image
+pandas
