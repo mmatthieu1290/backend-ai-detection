@@ -1,7 +1,6 @@
 fastapi
 uvicorn
-tensorflow-cpu
-
+tensorflow=2.17.0
 opencv-python
 numpy
 pandas
@@ -9,3 +8,4 @@ pillow
 scikit-image
 pandas
 gdown
+keras=3.4.1

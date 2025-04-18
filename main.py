@@ -9,20 +9,23 @@ import gdown
 import psutil
 import os
 
+
+
 # uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 
 
 # Charger le modèle
 
-MODEL_PATHS = ["model.keras"] + [f"model_{k}.keras" for k in range(1,6)]
-MODEL_IDs = ['1pltop6LLOwwn3pYfg8KAT2CDjohmvWty','1FKTLjF-EWwiHc4k6BiVtewF3v8H5VqBY',
-             '1Yg21KS-s8xt8fhIsV15wCYYQJGcdDMn2',
-             '12tX_yN_Eqz89HPj-fNV2TOL1D7OI8gx-',
-             '11RKyiTIs0ZuLmD8KjUD-XUWe5jqe17y8',
-             '1PPQQTVZFYcGlXdGkHUPm6XVbGv2otA-8']
-MODEL_URLS = [f"https://drive.google.com/uc?id={FILE_ID}&confirm=t" for FILE_ID in MODEL_IDs]
+#MODEL_PATHS = ["model.keras"] + [f"model_{k}.keras" for k in range(1,6)]
+#MODEL_IDs = ['1pltop6LLOwwn3pYfg8KAT2CDjohmvWty','1FKTLjF-EWwiHc4k6BiVtewF3v8H5VqBY',
+#             '1Yg21KS-s8xt8fhIsV15wCYYQJGcdDMn2',
+#             '1Qo3QcE-B6MSdgBWe4NfZzRnL8dDAmb6J',
+#             '11RKyiTIs0ZuLmD8KjUD-XUWe5jqe17y8',
+#             '1PPQQTVZFYcGlXdGkHUPm6XVbGv2otA-8']
 
-model4 = tf.keras.models.load_model("model_4.keras")
+MODEL_PATHS = ["model_3.keras"]
+MODEL_IDs = ['1Qo3QcE-B6MSdgBWe4NfZzRnL8dDAmb6J']
+MODEL_URLS = [f"https://drive.google.com/uc?id={FILE_ID}&confirm=t" for FILE_ID in MODEL_IDs]
 
 # Vérifier si le modèle est déjà téléchargé
 for j,MODEL_PATH in enumerate(MODEL_PATHS):   
@@ -43,7 +46,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Pour autoriser tout le monde, sinon mets ["http://localhost:3000"]
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -108,6 +111,7 @@ async def predict(file: UploadFile):
 
     print("Current working directory:", os.getcwd())
     print("Files in current dir:", os.listdir())
+    print(tf.__version__)
     feature_columns =  ["glcm_contrast", "glcm_dissimilarity", "laplacian_var", "edge_density", "fft_high_freq_mean"]
     contents = await file.read()
     file_name = file.filename.replace('·','')
@@ -164,15 +168,15 @@ async def predict(file: UploadFile):
     #model = tf.keras.models.load_model("model.keras")
     #model1 = tf.keras.models.load_model("model_1.keras")
     #model2 = tf.keras.models.load_model("model_2.keras")
-    #model3 = tf.keras.models.load_model("model_3.keras")
+    model3 = tf.keras.models.load_model("model_3.keras")
     #model4 = tf.keras.models.load_model("model_4.keras")
     #model5 = tf.keras.models.load_model("model_5.keras")
     #result = model.predict(combined_ds)
     #result1 = model1.predict(combined_ds)
     #result2 = model2.predict(combined_ds)
-    #result3 = model3.predict(combined_ds)
-    result4 = model4.predict(combined_ds)
-    proba = float(result4)
+    result3 = model3.predict(combined_ds)
+    #result4 = model4.predict(combined_ds)
+    proba = float(result3)
     #result5 = model5.predict(combined_ds)
     #proba = max([float(result1),float(result2),\
     #             float(result3),float(result4),float(result5)])
